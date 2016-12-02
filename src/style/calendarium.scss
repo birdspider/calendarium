@@ -1,0 +1,70 @@
+.calendarium {
+	position: relative;
+
+	display: inline-block;
+
+	background: transparent!important;
+
+  a {
+    text-decoration: none;
+  }
+
+	&-link {
+		display: block;
+
+		cursor: pointer;
+
+		outline: none!important;
+	}
+
+	&-link:focus ~ ul,
+	&-link:active ~ ul,
+	&-list:hover {
+		visibility: visible;
+	}
+
+	&-list {
+		position: absolute;
+		z-index: 900;
+		top: 100%;
+		left: 0;
+
+		visibility: hidden;
+
+		width: 170px;
+	}
+
+	&-list,
+	&-item {
+		margin: 0;
+		padding: 0;
+
+		list-style: none;
+
+		background: #fff;
+	}
+
+	&-item {
+		float: none;
+
+		text-align: left;
+	}
+
+	&-item-link {
+		display: block;
+
+		text-decoration: none;
+
+		outline: none;
+	}
+
+	&-item.hover,
+	&-item:hover {
+		position: relative;
+		z-index: 900;
+
+		cursor: pointer;
+
+		outline: none;
+	}
+}
