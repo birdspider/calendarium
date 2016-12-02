@@ -63,3 +63,9 @@ data-services="[&quot;googlecalendar&quot;,&quot;generic&quot;,&quot;yahoocalend
 ```
 data-event-mode="day"
 ```
+
+## Contribtion
+
+Is very welcome!
+
+Mind you I format the js with `js-beautify -C -s 2 -r` and the sass files with `csscomb -c "personal_fixcss.json"`.
