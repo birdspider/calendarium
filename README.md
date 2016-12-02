@@ -19,6 +19,13 @@ javascript library providing html markup enabling users to add calendar events t
 1. [addtocalendar](https://github.com/AddToCalendar/addtocalendar) but reimplemented due to [issue17](https://github.com/AddToCalendar/addtocalendar/issues/17)
 2. [Shariff](https://github.com/heiseonline/shariff) architecture and build process
 
+## What does it look like
+
+![alt tag](https://raw.githubusercontent.com/birdspider/calendarium/master/demo/what-does-it-look-like.png)
+
+This was screenshotted from the demo page. Look at the bottom to see that the link goes directly to the service, instead
+of going via some 3rd party server.
+
 ## Installation
 
 1. clone
@@ -66,6 +73,6 @@ data-event-mode="day"
 
 ## Contribtion
 
-Is very welcome!
+is very welcome!
 
 Mind you I format the js with `js-beautify -C -s 2 -r` and the sass files with `csscomb -c "personal_fixcss.json"`.
