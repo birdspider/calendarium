@@ -156,7 +156,7 @@ calendarium.prototype = {
 
     return (typeof genericCallbacks === 'string' ? genericCallbacks.split(',').map($.trim) : genericCallbacks)
       .map(function(callbackName) {
-        console.info('Initalizing generic', callbackName);
+        // console.info('Initalizing generic', callbackName);
         return require('./services/generic')(window[callbackName]);
       });
   }

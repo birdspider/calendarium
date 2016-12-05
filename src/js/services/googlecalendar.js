@@ -14,7 +14,7 @@ module.exports = function(calendarium) {
 
   // with time
   var _makeDateTime = function(datetime) {
-    return datetime.toISOString().replace(/\.\d+Z$/, '').replace(/[-:]/g, '');
+    return datetime.toISOString().replace(/\.\d+Z$/,'Z').replace(/[-:]/g, '');
   };
 
   // only day to trigger "googles" full-day representation
