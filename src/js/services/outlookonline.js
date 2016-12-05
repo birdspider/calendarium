@@ -2,7 +2,8 @@
 
 /*
  * https://outlook.live.com/owa/
- * ?subject=some+title
+ * ?path=/calendar/action/compose
+ * &subject=some+title
  * &location=somewhere
  * &body=some+descr
  * &startdt=20161129T230000Z
@@ -19,13 +20,14 @@ module.exports = function(calendarium) {
 
   var _makeLink = function(data) {
     return base + calendarium._obj2param({
-      startdt: _makeDate(data.start)
+      path: '/calendar/action/compose'
+      , startdt: _makeDate(data.start)
       , enddt: _makeDate(data.stop)
       , location: data.location
       , subject: data.title
       , body: data.description
       , allday: (data.mode && data.mode === 'day')
-    , });
+    });
   };
 
   return {
