@@ -16,7 +16,7 @@ module.exports = function(calendarium) {
   var base = 'https://calendar.yahoo.com/?';
 
   var _makeDate = function(datetime) {
-    return datetime.toISOString().replace(/\.\d+Z$/, '').replace(/[-:]/g, '');
+    return datetime.toISOString().replace(/\.\d+Z$/, 'Z').replace(/[-:]/g, '');
   };
 
   var _makeLink = function(data) {
