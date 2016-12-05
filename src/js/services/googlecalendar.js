@@ -14,7 +14,7 @@ module.exports = function(calendarium) {
 
   // with time
   var _makeDateTime = function(datetime) {
-    return datetime.toISOString().replace(/\.\d+Z$/,'Z').replace(/[-:]/g, '');
+    return datetime.toISOString().replace(/\.\d+Z$/, 'Z').replace(/[-:]/g, '');
   };
 
   // only day to trigger "googles" full-day representation
@@ -23,10 +23,20 @@ module.exports = function(calendarium) {
   };
 
   var _makeLink = function(data) {
-    var dMaker = data.mode && data.mode === 'day' ? _makeDateDay : _makeDateTime;
+
+    var dates = [data.start, data.stop];
+    var dMaker = _makeDateTime;
+
+    if (data.mode && data.mode === 'day') {
+      dMaker = _makeDateDay;
+      var endplus1 = new Date(data.stop);
+      endplus1.setTime(endplus1.getTime() + (24 * 60 * 60 * 1000));
+      dates = [data.start, endplus1];
+    }
+
     return base + calendarium._obj2param({
       action: 'TEMPLATE'
-      , dates: [data.start, data.stop].map(dMaker).join('/')
+      , dates: dates.map(dMaker).join('/')
       , location: data.location
       , text: data.title
       , details: data.description
