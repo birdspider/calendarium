@@ -13,6 +13,8 @@ javascript library providing html markup enabling users to add calendar events t
 
 ## What does it look like
 
+see also the [demo page](https://rawgit.com/birdspider/calendarium/master/demo/github.html)
+
 ![alt tag](https://raw.githubusercontent.com/birdspider/calendarium/master/demo/what-does-it-look-like.png)
 
 This was screenshotted from the demo page. Look at the bottom to see that the link goes directly to the service, instead
