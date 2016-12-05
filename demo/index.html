@@ -85,8 +85,8 @@
       		data-event-stop="2016-12-16T17:59:00" data-event-title="MineCon 2016"
      	 	data-event-location="World 8"
       		data-event-mode="day"
-      		data-generic-callbacks="customICAL"
-      		data-services="[&quot;googlecalendar&quot;,&quot;generic&quot;,&quot;yahoocalendar&quot;,&quot;outlookonline&quot;]">...loading...</span>
+      		data-generic-callbacks="customICAL2,customICAL"
+      		data-services="[&quot;googlecalendar&quot;,&quot;generic1&quot;,&quot;generic2&quot;,&quot;yahoocalendar&quot;,&quot;outlookonline&quot;]">...loading...</span>
 
       <pre class="col-xs-8">
 &lt;span class=&quot;calendarium col-xs-offset-1 col-xs-3&quot;
@@ -108,13 +108,30 @@
 
       // https recommended
       return {
-        name: 'generic'
+        name: 'generic1'
         , link: 'http://localhost:3000/ics.php?' + $.param(event)
         , title: {
           'de': 'In Outlook importieren (ics-Datei)'
           , 'en': 'add to Outlook (ics-File)'
         }
         , text: 'Outlook'
+      }
+    }
+
+    window.customICAL2 = function(calendarium) {
+      var event = $.extend({},calendarium.options.event);
+      event.start = event.start.getTime()/1000;
+      event.stop = event.stop.getTime()/1000;
+
+      // https recommended
+      return {
+        name: 'generic2'
+        , link: 'http://localhost:3000/ics.php?' + $.param(event)
+        , title: {
+          'de': 'In Outlook2 importieren (ics-Datei)'
+          , 'en': 'add to Outlook2 (ics-File)'
+        }
+        , text: 'Outlook2'
       }
     }
 

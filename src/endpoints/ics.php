@@ -31,6 +31,8 @@ $in = filter_input_array(INPUT_GET,[
 $tzUTC = new DateTimeZone('UTC');
 
 $format = 'Ymd\THis\Z';
+$formatD = 'Ymd';
+
 $dnow = HAS_DT_IMMUTABLE
 			? new DateTimeImmutable(null,$tzUTC)
 			: new DateTime(null,$tzUTC);
@@ -47,14 +49,10 @@ $dstop = HAS_DT_IMMUTABLE
 $dstopF = $dstop->format($format);
 
 if($in['mode'] === 'day'){
-	$dstopF = <<<EOD
-RRULE:FREQ=DAILY;UNTIL={$dstopF}
-EOD;
-
+  $dstartF = $dstart->format($formatD);
+	$dstopF = "DTEND:".$dstop->format($formatD);
 } else {
-		$dstopF = <<<EOD
-DTEND:{$dstopF}
-EOD;
+  $dstopF = "DTEND:{$dstopF}";
 }
 
 $uid = 'vevent-'.md5(json_encode($in)).'@'.UID_RIGHT;
@@ -64,7 +62,7 @@ error_log($filename);
 foreach(['location','title','description'] as $k)
 	$in[$k] = chunk_split_unicode($in[$k],75,' ');
 
-header('text/calendar; charset=utf-8');
+header('Content-Type: text/calendar; charset=utf-8');
 header("Content-Disposition: attachment; filename=\"{$filename}.ics\"");
 
 echo <<<EOD
@@ -85,4 +83,3 @@ DTSTAMP:{$dnowF}\r
 END:VEVENT\r
 END:VCALENDAR
 EOD;
-
