@@ -29,7 +29,8 @@ module.exports = function(calendarium) {
       , view: 'd'
       , v: 60
       , type: 20
-    , });
+      , allday: (data.mode && data.mode === 'day')
+    });
   };
 
   return {
