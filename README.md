@@ -4,15 +4,7 @@ javascript library providing html markup enabling users to add calendar events t
 
 ## Information
 
-**very alpha**
-
-**not yet published on npm**
-
-**not tested on node**
-
-**not tested on outlookonline or yahoo**
-
-**watch out for dragons**
+**very alpha, not yet published on npm, not tested on node, watch out for dragons**
 
 ### inspired by
 
@@ -38,7 +30,7 @@ of going via some 3rd party server.
 ### add markup to page i.e
 
 dates have to be `Date.parse` or `new Date()` parseable:
-[ISO-8601](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse#ECMAScript_5_ISO-8601_format_support) or [RFC2822](https://tools.ietf.org/html/rfc2822) , I recommend RFC2822
+[ISO-8601](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse#ECMAScript_5_ISO-8601_format_support) or [RFC2822](https://tools.ietf.org/html/rfc2822) , recommended RFC2822
 
 ```
 <span class="calendarium"
