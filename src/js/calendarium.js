@@ -101,6 +101,7 @@ calendarium.prototype = {
 
     var $addElement = $('<a href="javascript:void(0);" rel="nofollow">')
       .addClass('calendarium-link')
+      .attr('tabindex', 999)
       .text(self.getLocalized(this.options, 'linktext'));
 
     var $buttonList = $('<ul>').addClass('calendarium-list');
