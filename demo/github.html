@@ -10,13 +10,20 @@
   <link rel="stylesheet" type="text/css" href="//rawgit.com/birdspider/calendarium/master/build/calendarium.min.css">
   <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
   <style>
-  .calendarium .calendarium-list { width: 200px; box-shadow: 2px 2px 5px #444; }
-  .calendarium .calendarium-item {
-    padding: 0.5em 0.6em;
-    background: none; }
-  .calendarium .calendarium-item.hover,
-  .calendarium .calendarium-item:hover {
-    background: #e6ece5; }
+    .calendarium .calendarium-list {
+      width: 200px;
+      box-shadow: 2px 2px 5px #444;
+    }
+
+    .calendarium .calendarium-item {
+      padding: 0.5em 0.6em;
+      background: none;
+    }
+
+    .calendarium .calendarium-item.hover,
+    .calendarium .calendarium-item:hover {
+      background: #e6ece5;
+    }
   </style>
 </head>
 
@@ -27,18 +34,10 @@
     <h3>data as attributes</h3>
     <div class="row">
 
-      	<span class="calendarium col-xs-offset-1 col-xs-3"
-      		data-event-start="2016-12-06T14:48:00.000Z"
-      		data-event-stop="2016-12-06T17:59:00.000Z"
-      		data-event-title="MineCon 2016"
-      		data-event-location="World 1">...loading...</span>
+      <span class="calendarium col-xs-offset-1 col-xs-3" data-event-start="2016-12-06T14:48:00.000Z" data-event-stop="2016-12-06T17:59:00.000Z"
+        data-event-title="MineCon 2016" data-event-location="World 1">...loading...</span>
 
-      <pre class="col-xs-8">
-&lt;span class=&quot;calendarium col-xs-offset-1 col-xs-3&quot;
-      		data-event-start=&quot;2016-12-06T14:48:00&quot;
-      		data-event-stop=&quot;2016-12-06T17:59:00&quot;
-      		data-event-title=&quot;MineCon 2016&quot;
-      		data-event-location=&quot;World 1&quot;&gt;...loading...&lt;/span&gt;</pre>
+      <pre class="col-xs-8"></pre>
     </div>
 
 
@@ -46,12 +45,9 @@
     <h4>take care to properly bind it</h4>
     <div class="row">
 
-      	<span class="calendarium col-xs-offset-1 col-xs-3"
-      		data-event="{&quot;start&quot;:&quot;2016-12-06T14:48:00&quot;,&quot;stop&quot;:&quot;2016-12-06T17:59:00&quot;,&quot;location&quot;:&quot;World 2&quot;,&quot;title&quot;:&quot;MineCon 2016&quot;,&quot;description&quot;:&quot;Ultimate Blocktivity&quot;}">...loading...</span>
+      <span class="calendarium col-xs-offset-1 col-xs-3" data-event="{&quot;start&quot;:&quot;2016-12-06T14:48:00&quot;,&quot;stop&quot;:&quot;2016-12-06T17:59:00&quot;,&quot;location&quot;:&quot;World 2&quot;,&quot;title&quot;:&quot;MineCon 2016&quot;,&quot;description&quot;:&quot;Ultimate Blocktivity&quot;}">...loading...</span>
 
-      <pre class="col-xs-8">
-&lt;span class=&quot;calendarium col-xs-offset-1 col-xs-3&quot;
-      		data-event=&quot;{&quot;start&quot;:&quot;2016-12-06T14:48:00&quot;,&quot;stop&quot;:&quot;2016-12-06T17:59:00&quot;,&quot;location&quot;:&quot;World 2&quot;,&quot;title&quot;:&quot;MineCon 2016&quot;,&quot;description&quot;:&quot;Ultimate Blocktivity&quot;}&quot;&gt;...loading...&lt;/span&gt;</pre>
+      <pre class="col-xs-8"></pre>
     </div>
 
 
@@ -60,60 +56,78 @@
 
       <span id="calendarium-dynamic" class="calendarium col-xs-offset-1 col-xs-3">...loading...</span>
 
-      <pre class="col-xs-8">
-&lt;span id=&quot;calendarium-dynamic&quot; class=&quot;calendarium col-xs-offset-1 col-xs-3&quot;&gt;...loading...&lt;/span&gt;</pre>
-    </div>
+      <pre class="col-xs-8"></div>
 
 
     <h3>generic callback</h3>
     <div class="row">
-		<span class="calendarium col-xs-offset-1 col-xs-3"
-      		data-event-start="2016-12-06T14:48:00.000Z"
-      		data-event-stop="2016-12-06T17:59:00.000Z"
-      		data-event-title="MineCon 2016"
-      		data-event-location="World 4"
-      		data-generic-callbacks="customICAL"
-      		data-services="[&quot;googlecalendar&quot;,&quot;generic&quot;,&quot;yahoocalendar&quot;,&quot;outlookonline&quot;]">...loading...</span>
+      <span class="calendarium col-xs-offset-1 col-xs-3" data-event-start="2016-12-06T14:48:00.000Z" data-event-stop="2016-12-06T17:59:00.000Z"
+        data-event-title="MineCon 2016" data-event-location="World 4" data-generic-callbacks="customICAL" data-services="[&quot;googlecalendar&quot;,&quot;generic&quot;,&quot;yahoocalendar&quot;,&quot;outlookonline&quot;]">...loading...</span>
 
-      <pre class="col-xs-8">
-&lt;span class=&quot;calendarium col-xs-offset-1 col-xs-3&quot;
-      		data-event-start=&quot;2016-12-06T14:48:00&quot;
-      		data-event-stop=&quot;2016-12-06T17:59:00&quot;
-      		data-event-title=&quot;MineCon 2016&quot;
-      		data-event-location=&quot;World 4&quot;
-      		data-generic-callbacks=&quot;customICAL&quot;
-      		data-services=&quot;[&quot;googlecalendar&quot;,&quot;generic&quot;,&quot;yahoocalendar&quot;,&quot;outlookonline&quot;]&quot;&gt;...loading...&lt;/span&gt;</pre>
+      <pre class="col-xs-8"></pre>
     </div>
 
     <h3>mode day (marks whole days)</h3>
-    <h4>only google and generic/php for now</h4>
     <div class="row">
 
-      	<span class="calendarium col-xs-offset-1 col-xs-3"
-      		data-event-start="2016-12-06T14:48:00.000Z"
-      		data-event-stop="2016-12-16T17:59:00.000Z" data-event-title="MineCon 2016"
-     	 	data-event-location="World 8"
-      		data-event-mode="day"
-      		data-generic-callbacks="customICAL2,customICAL"
-      		data-services="[&quot;googlecalendar&quot;,&quot;generic1&quot;,&quot;generic2&quot;,&quot;yahoocalendar&quot;,&quot;outlookonline&quot;]">...loading...</span>
+      <span class="calendarium col-xs-offset-1 col-xs-3" data-event-start="2016-12-06T14:48:00.000Z" data-event-stop="2016-12-16T17:59:00.000Z"
+        data-event-title="MineCon 2016" data-event-location="World 8" data-event-mode="day" data-generic-callbacks="customICAL2,customICAL"
+        data-services="[&quot;googlecalendar&quot;,&quot;generic1&quot;,&quot;generic2&quot;,&quot;yahoocalendar&quot;,&quot;outlookonline&quot;]">...loading...</span>
 
-      <pre class="col-xs-8">
-&lt;span class=&quot;calendarium col-xs-offset-1 col-xs-3&quot;
-      		data-event-start=&quot;2016-12-06T14:48:00&quot;
-      		data-event-stop=&quot;2016-12-16T17:59:00&quot; data-event-title=&quot;MineCon 2016&quot;
-     	 	data-event-location=&quot;World 8&quot;
-      		data-event-mode=&quot;day&quot;
-      		data-generic-callbacks=&quot;customICAL&quot;
-      		data-services=&quot;[&quot;googlecalendar&quot;,&quot;generic&quot;,&quot;yahoocalendar&quot;,&quot;outlookonline&quot;]&quot;&gt;...loading...&lt;/span&gt;</pre>
+      <pre class="col-xs-8"></pre>
+
+    </div>
+
+    <h3>with link</h3>
+    <h4>canonical || actual</h4>
+    <div class="row">
+
+      <span class="calendarium col-xs-offset-1 col-xs-3" data-event-start="2016-12-06T14:48:00.000Z" data-event-stop="2016-12-16T17:59:00.000Z"
+        data-event-title="MineCon 2016" data-event-location="World 9" data-event-description="Awesome Event in your City!"
+        data-event-link="canonical" data-services="[&quot;googlecalendar&quot;,&quot;yahoocalendar&quot;,&quot;outlookonline&quot;]">...loading...</span>
+
+      <pre class="col-xs-8 small"></pre>
+
+    </div>
+
+    <h4>actual</h4>
+    <div class="row">
+
+      <span class="calendarium col-xs-offset-1 col-xs-3" data-event-start="2016-12-06T14:48:00.000Z" data-event-stop="2016-12-16T17:59:00.000Z"
+        data-event-title="MineCon 2016" data-event-location="World 9" data-event-description="Awesome Event in your City!"
+        data-event-link="actual" data-services="[&quot;googlecalendar&quot;,&quot;yahoocalendar&quot;,&quot;outlookonline&quot;]">...loading...</span>
+
+      <pre class="col-xs-8 small"></pre>
+
+    </div>
+
+    <h4>custom</h4>
+    <div class="row">
+
+      <span class="calendarium col-xs-offset-1 col-xs-3" data-event-start="2016-12-06T14:48:00.000Z" data-event-stop="2016-12-16T17:59:00.000Z"
+        data-event-title="MineCon 2016" data-event-location="World 9" data-event-description="Awesome Event in your City!"
+        data-event-link="http://www.example.com" data-services="[&quot;googlecalendar&quot;,&quot;yahoocalendar&quot;,&quot;outlookonline&quot;]">...loading...</span>
+
+      <pre class="col-xs-8 small"></pre>
 
     </div>
   </div>
 
   <script>
+    $('.calendarium').each(function() {
+      var tmp = $('<div>').append($(this).clone());
+      $(this)
+        .next('pre')
+        .text(
+          tmp.html()
+          .replace(/data-/g, "\n  data-")
+          .replace("...", "\n  ..."));
+    });
+
     window.customICAL = function(calendarium) {
-      var event = $.extend({},calendarium.options.event);
-      event.start = event.start.getTime()/1000;
-      event.stop = event.stop.getTime()/1000;
+      var event = $.extend({}, calendarium.options.event);
+      event.start = event.start.getTime() / 1000;
+      event.stop = event.stop.getTime() / 1000;
 
       // https recommended
       return {
@@ -128,9 +142,9 @@
     }
 
     window.customICAL2 = function(calendarium) {
-      var event = $.extend({},calendarium.options.event);
-      event.start = event.start.getTime()/1000;
-      event.stop = event.stop.getTime()/1000;
+      var event = $.extend({}, calendarium.options.event);
+      event.start = event.start.getTime() / 1000;
+      event.stop = event.stop.getTime() / 1000;
 
       // https recommended
       return {
