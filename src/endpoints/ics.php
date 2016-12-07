@@ -49,18 +49,23 @@ $dstop = HAS_DT_IMMUTABLE
 $dstopF = $dstop->format($format);
 
 if($in['mode'] === 'day'){
-  $dstartF = $dstart->format($formatD);
+	$dstop = $dstop->add(new DateInterval('P1D'));
+	$dstartF = $dstart->format($formatD);
 	$dstopF = "DTEND:".$dstop->format($formatD);
 } else {
-  $dstopF = "DTEND:{$dstopF}";
+		$dstopF = <<<EOD
+DTEND:{$dstopF}
+EOD;
 }
 
 $uid = 'vevent-'.md5(json_encode($in)).'@'.UID_RIGHT;
 $filename = trim(substr($in['title'],0,64));
 error_log($filename);
 
-foreach(['location','title','description'] as $k)
-	$in[$k] = chunk_split_unicode($in[$k],75,' ');
+foreach(array('location','title','description') as $k)
+	$in[$k] = chunk_split_unicode(preg_replace('/\s{2,}/','  ',$in[$k]),75,' ');
+
+ob_get_clean();
 
 header('Content-Type: text/calendar; charset=utf-8');
 header("Content-Disposition: attachment; filename=\"{$filename}.ics\"");
