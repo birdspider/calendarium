@@ -1,6 +1,6 @@
 {
   "name": "calendarium",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "javascript library providing html markup enabling users to add calendar events to various off/online calendars",
   "homepage": "https://github.com/birdspider/calendarium",
   "main": "src/js/calendarium.js",

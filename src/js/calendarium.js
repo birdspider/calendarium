@@ -12,6 +12,7 @@ var calendarium = function(element, options) {
   var data = $(element).data();
   var event = this._prepEventData(data);
 
+
   this.options = $.extend({}, this.defaults, data, {
     event: event
   }, options);
@@ -19,6 +20,22 @@ var calendarium = function(element, options) {
   // ensure dates
   this.options.event.start = new Date(this.options.event.start);
   this.options.event.stop = new Date(this.options.event.stop);
+
+  // optionally fetch links
+  var link = '';
+  switch (this.options.event.link) {
+    case 'canonical':
+      link = $('head > link[href][rel="canonical"]').attr('href') || global.location;
+      break;
+    case 'actual':
+      link = global.location;
+      break;
+  }
+
+  $.extend(this.options.event, {
+    link: link
+    , description: $.trim(this.options.event.description + '\n\n ' + link)
+  });
 
   var availableServices = [
     require('./services/googlecalendar')
@@ -68,6 +85,7 @@ calendarium.prototype = {
       , description: ''
       , location: ''
       , mode: 'time'
+      , link: ''
     }
   },
 
@@ -140,10 +158,11 @@ calendarium.prototype = {
       , {
         start: data.eventStart
         , stop: data.eventStop
-        , title: data.eventTitle
-        , description: data.eventDescription
-        , location: data.eventLocation
-        , mode: data.eventMode
+        , title: data.eventTitle || ''
+        , description: data.eventDescription || ''
+        , location: data.eventLocation || ''
+        , mode: data.eventMode || ''
+        , link: data.eventLink || ''
       }
       , (data.event && (data.event[0] === '{' && JSON.parse(data.event) || data.event) || {}));
   },
@@ -158,7 +177,7 @@ calendarium.prototype = {
     return (typeof genericCallbacks === 'string' ? genericCallbacks.split(',').map($.trim) : genericCallbacks)
       .map(function(callbackName) {
         // console.info('Initalizing generic', callbackName);
-        return require('./services/generic')(window[callbackName]);
+        return require('./services/generic')(global[callbackName]);
       });
   }
 };

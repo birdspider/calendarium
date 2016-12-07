@@ -134,7 +134,7 @@
   , // Whether all forms of subscript notation are allowed.
   "sub": false
   , // Whether trailing whitespace rules apply.
-  "trailing": false
+  "trailing": true
   , // Specify indentation.
   "indent": 4
   , // Whether strict whitespace rules apply.
@@ -151,5 +151,5 @@
   , // Maximum number of statements per function.
   "maxstatements": 25
   , // Maximum cyclomatic complexity.
-  "maxcomplexity": 6
+  "maxcomplexity": 8
 }
