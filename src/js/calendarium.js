@@ -30,6 +30,9 @@ var calendarium = function(element, options) {
     case 'actual':
       link = global.location;
       break;
+    default:
+      link = this.options.event.link;
+      break;
   }
 
   $.extend(this.options.event, {
