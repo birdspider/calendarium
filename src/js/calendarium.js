@@ -31,7 +31,7 @@ var calendarium = function(element, options) {
       link = global.location;
       break;
     default:
-      link = this.options.event.link;
+      link = this.options.event.link || '';
       break;
   }
 
