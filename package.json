@@ -29,7 +29,7 @@
     "grunt-http-server": "^2.0.0",
     "grunt-sass": "^2.0.0",
     "http-server": "^0.10.0",
-    "node-sass": "^4.5.3",
+    "node-sass": "^4.7.2",
     "sass-lint": "^1.11.1",
     "uglifyify": "^4.0.3"
   },
