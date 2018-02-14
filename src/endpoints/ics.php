@@ -17,16 +17,22 @@ function chunk_split_unicode($str, $l = 76, $prefix = '', $e = "\r\n") {
     return trim(ltrim($str,$prefix));
 }
 
-$in = filter_input_array(INPUT_GET,[
-	'start' => ['filter' => FILTER_VALIDATE_INT,
-				'flags'  => FILTER_REQUIRE_SCALAR]
-	,'stop' => ['filter' => FILTER_VALIDATE_INT,
-				'flags'  => FILTER_REQUIRE_SCALAR]
+$in = filter_input_array(INPUT_GET,array(
+	'start' => array('filter' => FILTER_VALIDATE_INT,
+				'flags'  => FILTER_REQUIRE_SCALAR)
+	,'stop' => array('filter' => FILTER_VALIDATE_INT,
+				'flags'  => FILTER_REQUIRE_SCALAR)
 	,'title' => FILTER_SANITIZE_STRING
 	,'location' => FILTER_SANITIZE_STRING
 	,'description' => FILTER_SANITIZE_STRING
 	,'mode' => FILTER_SANITIZE_ENCODED // time or day
-],true);
+),true);
+
+if(empty($in)){
+	ob_get_clean();
+	header($_SERVER["SERVER_PROTOCOL"]." 404 Bad Request");
+	die();
+}
 
 $tzUTC = new DateTimeZone('UTC');
 
