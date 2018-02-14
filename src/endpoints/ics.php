@@ -3,6 +3,8 @@
 //ics.php?start=1481032080000&stop=1481043540000&title=MineCon+2016&location=World+4
 //http://severinghaus.org/projects/icv/
 
+header("X-Robots-Tag: noindex");
+
 define('HAS_DT_IMMUTABLE',PHP_MAJOR_VERSION > 5 || PHP_MINOR_VERSION > 5);
 define('UID_RIGHT','calendarium.project');
 
@@ -30,7 +32,7 @@ $in = filter_input_array(INPUT_GET,array(
 
 if(empty($in)){
 	ob_get_clean();
-	header($_SERVER["SERVER_PROTOCOL"]." 404 Bad Request");
+	header($_SERVER["SERVER_PROTOCOL"]." 400 Bad Request");
 	die();
 }
 
