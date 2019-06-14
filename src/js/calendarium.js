@@ -1,140 +1,173 @@
-'use strict';
+import 'style/calendarium-plain.scss'
 
-var $ = require('jquery');
+import log from 'loglevel'
 
-var calendarium = function(element, options) {
-  var self = this;
+import GoogleCalendar from './services/googlecalendar'
+import YahooCalendar from './services/yahoocalendar'
+import OutlookOnline from './services/outlookonline'
+import Generic from './services/generic'
 
-  this.element = element;
+log.setLevel(LOG ? log.levels.DEBUG : log.levels.INFO)
 
-  $(element).empty();
+const defaults = {
+  theme: 'plain',
 
-  var data = $(element).data();
-  var event = this._prepEventData(data);
+  backendUrl: null,
 
+  lang: 'de',
 
-  this.options = $.extend({}, this.defaults, data, {
-    event: event
-  }, options);
+  langFallback: 'en',
 
-  // ensure dates
-  this.options.event.start = new Date(this.options.event.start);
-  this.options.event.stop = new Date(this.options.event.stop);
+  services: ['googlecalendar', 'yahoocalendar', 'outlookonline'],
 
-  // optionally fetch links
-  var link = '';
-  switch (this.options.event.link) {
-    case 'canonical':
-      link = $('head > link[href][rel="canonical"]').attr('href') || global.location;
-      break;
-    case 'actual':
-      link = global.location;
-      break;
-    default:
-      link = this.options.event.link || '';
-      break;
+  genericCallbacks: [],
+
+  linktext: {
+    'de': 'Im Kalender speichern',
+    'en': 'save to calendar'
+  },
+
+  event: {
+    start: new Date(),
+    stop: new Date(),
+    title: 'title',
+    description: '',
+    location: '',
+    mode: 'time',
+    link: ''
+  }
+}
+
+class Calendarium {
+  constructor (element, options = {}) {
+    log.debug(options)
+    this.element = element
+    this.$element = $(element).empty()
+    this.data = this.$element.data()
+    this.event = Calendarium.prepEventData(this.data)
+    this.options = { ...defaults, ...this.data, event: this.event, ...options }
+
+    // ensure dates
+    this.options.event.start = new Date(this.options.event.start)
+    this.options.event.stop = new Date(this.options.event.stop)
+
+    try {
+      this.init()
+    } catch (err) {
+      log.error(err.message, this.element, this.options)
+    }
   }
 
-  $.extend(this.options.event, {
-    link: link
-    , description: $.trim(this.options.event.description + '\n\n ' + link)
-  });
-
-  var availableServices = [
-    require('./services/googlecalendar')
-    , require('./services/yahoocalendar')
-    , require('./services/outlookonline')
-  ].concat(this._prepGenericCallbacks(this.options.genericCallbacks));
-
-  // filter available services to those that are enabled and initialize them
-  this.services = $.map(this.options.services, function(serviceName) {
-    var service;
-    availableServices.forEach(function(availableService) {
-      availableService = availableService(self);
-      if (availableService.name === serviceName) {
-        service = availableService;
-        return null;
-      }
-    });
-    return service;
-  });
-  this._setup();
-};
-
-calendarium.prototype = {
-
-  defaults: {
-    theme: 'plain',
-
-    backendUrl: null,
-
-    lang: 'de',
-
-    langFallback: 'en',
-
-    services: ['googlecalendar', 'yahoocalendar', 'outlookonline'],
-
-    genericCallbacks: [],
-
-    linktext: {
-      'de': 'Im Kalender speichern'
-      , 'en': 'save to calendar'
-    },
-
-    event: {
-      start: new Date()
-      , stop: new Date()
-      , title: 'title'
-      , description: ''
-      , location: ''
-      , mode: 'time'
-      , link: ''
+  init () {
+    // optionally fetch links
+    let link = ''
+    switch (this.options.event.link) {
+      case 'canonical':
+        link = $('head > link[href][rel="canonical"]').attr('href') || global.location
+        break
+      case 'actual':
+        link = global.location
+        break
+      default:
+        link = this.options.event.link || ''
+        break
     }
-  },
 
-  $element: function() {
-    return $(this.element);
-  },
+    this.options.event = {
+      ...this.options.event,
+      link,
+      description: $.trim(this.options.event.description + '\n\n ' + link)
+    }
 
-  getLocalized: function(data, key) {
+    const availableServices = [GoogleCalendar, YahooCalendar, OutlookOnline]
+      .concat(this.prepGenericCallbacks(this.options.genericCallbacks))
+
+    const self = this
+
+    // filter available services to those that are enabled and initialize them
+    this.services = $.map(this.options.services, function (serviceName) {
+      let service
+      availableServices.forEach(availableService => {
+        availableService = availableService(self)
+        if (availableService.name === serviceName) {
+          service = availableService
+          return null
+        }
+      })
+      return service
+    })
+
+    this.setup()
+  }
+
+  getLocalized (data, key) {
     if (typeof data[key] === 'object') {
       if (typeof data[key][this.options.lang] === 'undefined') {
-        return data[key][this.options.langFallback];
+        return data[key][this.options.langFallback]
       } else {
-        return data[key][this.options.lang];
+        return data[key][this.options.lang]
       }
     } else if (typeof data[key] === 'string') {
-      return data[key];
+      return data[key]
     }
-    return undefined;
-  },
+    return undefined
+  }
 
-  _getEventData: function() {
-    return this.options.event;
-  },
+  prepGenericCallbacks () {
+    const genericCallbacks = this.options.genericCallbacks
+    if (!genericCallbacks) {
+      return []
+    }
 
-  _setup: function() {
-    var self = this;
+    const genericCallbacksArr = typeof genericCallbacks === 'string'
+      ? genericCallbacks.split(',').map($.trim)
+      : genericCallbacks
 
-    var themeClass = 'calendarium-theme-' + this.options.theme;
+    return genericCallbacksArr.map(callbackName => Generic(global[callbackName]))
+  }
 
-    var $element = this.$element().addClass(themeClass);
+  getEventData () {
+    return this.options.event
+  }
 
-    var $addElement = $('<a href="javascript:void(0);" rel="nofollow">')
+  static prepEventData (data) {
+    const event = data.event && data.event[0] === '{'
+      ? JSON.parse(data.event)
+      : data.event || {}
+
+    return {
+      start: data.eventStart,
+      stop: data.eventStop,
+      title: data.eventTitle || '',
+      description: data.eventDescription || '',
+      location: data.eventLocation || '',
+      mode: data.eventMode || '',
+      link: data.eventLink || '',
+      ...event
+    }
+  }
+
+  setup () {
+    const self = this
+    const themeClass = 'calendarium-theme-' + this.options.theme
+
+    const $element = this.$element.addClass(themeClass)
+
+    const $addElement = $('<a href="javascript:void(0);" rel="nofollow">')
       .addClass('calendarium-link')
       .attr('tabindex', 999)
-      .text(self.getLocalized(this.options, 'linktext'));
+      .text(self.getLocalized(this.options, 'linktext'))
 
-    var $buttonList = $('<ul>').addClass('calendarium-list');
+    const $buttonList = $('<ul>').addClass('calendarium-list')
 
     // add html for service-links
-    this.services.forEach(function(service) {
-      var $li = $('<li>').addClass('calendarium-item').addClass(service.name);
-      var $shareText = $('<span>')
+    this.services.forEach(function (service) {
+      const $li = $('<li>').addClass('calendarium-item').addClass(service.name)
+      const $shareText = $('<span>')
         .addClass('calendarium-text')
-        .text(self.getLocalized(service, 'text'));
+        .text(self.getLocalized(service, 'text'))
 
-      var $shareLink = $('<a>')
+      const $shareLink = $('<a>')
         .addClass('calendarium-item-link')
         .attr('rel', 'nofollow')
         .attr('href', service.link)
@@ -142,57 +175,28 @@ calendarium.prototype = {
         .attr('title', self.getLocalized(service, 'title'))
         .attr('role', 'button')
         .attr('aria-label', self.getLocalized(service, 'title'))
-        .append($shareText);
+        .append($shareText)
 
-      $li.append($shareLink);
+      $li.append($shareLink)
 
-      $buttonList.append($li);
-    });
+      $buttonList.append($li)
+    })
 
     $element
       .append($addElement)
-      .append($buttonList);
-  },
-
-  _obj2param: $.param,
-
-  _prepEventData: function(data) {
-    return $.extend({}
-      , {
-        start: data.eventStart
-        , stop: data.eventStop
-        , title: data.eventTitle || ''
-        , description: data.eventDescription || ''
-        , location: data.eventLocation || ''
-        , mode: data.eventMode || ''
-        , link: data.eventLink || ''
-      }
-      , (data.event && (data.event[0] === '{' && JSON.parse(data.event) || data.event) || {}));
-  },
-
-  _prepGenericCallbacks: function(genericCallbacks) {
-    var self = this;
-
-    if (!genericCallbacks || !genericCallbacks.length) {
-      return [];
-    }
-
-    return (typeof genericCallbacks === 'string' ? genericCallbacks.split(',').map($.trim) : genericCallbacks)
-      .map(function(callbackName) {
-        // console.info('Initalizing generic', callbackName);
-        return require('./services/generic')(global[callbackName]);
-      });
+      .append($buttonList)
   }
 };
 
-module.exports = calendarium;
+export default Calendarium
 
 // export calendarium class to global (for non-Node users)
-global.calendarium = calendarium;
+global.Calendarium = Calendarium
 
-// initialize .shariff elements
-$('.calendarium').filter('[data-event],[data-event-start]').each(function() {
-  if (!this.hasOwnProperty('calendarium')) {
-    this.calendarium = new calendarium(this);
-  }
-});
+jQuery('.calendarium')
+  .filter('[data-event],[data-event-start]')
+  .each(function () {
+    if (!this.hasOwnProperty('calendarium')) {
+      this.calendarium = new Calendarium(this)
+    }
+  })

@@ -1,5 +1,3 @@
-'use strict';
-
 /*
  * https://outlook.live.com/owa/
  * ?path=/calendar/action/compose
@@ -9,37 +7,35 @@
  * &startdt=20161129T230000Z
  * &enddt=20161203T100000Z
  */
+export default function (calendarium) {
+  const base = 'https://outlook.live.com/owa/?'
 
-module.exports = function(calendarium) {
+  const _makeDate = function (datetime) {
+    return datetime.toISOString().replace(/\.\d+Z$/, 'Z').replace(/[-:]/g, '')
+  }
 
-  var base = 'https://outlook.live.com/owa/?';
-
-  var _makeDate = function(datetime) {
-    return datetime.toISOString().replace(/\.\d+Z$/, 'Z').replace(/[-:]/g, '');
-  };
-
-  var _makeLink = function(data) {
-    return base + calendarium._obj2param({
-      path: '/calendar/action/compose'
-      , startdt: _makeDate(data.start)
-      , enddt: _makeDate(data.stop)
-      , location: data.location
-      , subject: data.title
-      , body: data.description
-      , allday: (data.mode && data.mode === 'day')
-    });
-  };
+  const _makeLink = function (data) {
+    return base + $.param({
+      path: '/calendar/action/compose',
+      startdt: _makeDate(data.start),
+      enddt: _makeDate(data.stop),
+      location: data.location,
+      subject: data.title,
+      body: data.description,
+      allday: (data.mode && data.mode === 'day')
+    })
+  }
 
   return {
-    name: 'outlookonline'
-    , title: {
-      'de': 'Bei Outlook Online Kalender eintragen'
-      , 'en': 'Add to Outlook Online Calendar'
-    }
-    , text: {
-      'de': 'Outlook Online Kalender'
-      , 'en': 'Outlook Online Calendar'
-    }
-    , link: _makeLink(calendarium._getEventData())
-  };
-};
+    name: 'outlookonline',
+    title: {
+      'de': 'Bei Outlook Online Kalender eintragen',
+      'en': 'Add to Outlook Online Calendar'
+    },
+    text: {
+      'de': 'Outlook Online Kalender',
+      'en': 'Outlook Online Calendar'
+    },
+    link: _makeLink(calendarium.getEventData())
+  }
+}

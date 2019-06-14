@@ -7,8 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Demonstration: calendarium</title>
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href="app.min.css">
-  <script src="jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="../dist/calendarium.css">
+  <script src="../node_modules/jquery/dist/jquery.min.js"></script>
 </head>
 
 <body>
@@ -153,11 +153,11 @@
         }
       };
 
-      new calendarium(document.getElementById('calendarium-dynamic'), dynamic);
+      new Calendarium(document.getElementById('calendarium-dynamic'), dynamic);
     })
   </script>
 
-  <script src="app.min.js"></script>
+  <script defer src="../dist/calendarium.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,8 @@
+/*!
+ * calendarium - v0.1.0
+ * {pkg.homepage}
+ * Copyright (c) 2019 Patrik Plihal 
+ * Licensed under the MIT
+ */
+.calendarium{position:relative;display:inline-block;background:transparent !important}.calendarium a{text-decoration:none}.calendarium-link{display:block;cursor:pointer;outline:none !important}.calendarium-link:focus ~ ul,.calendarium-link:active ~ ul,.calendarium-list:hover{visibility:visible}.calendarium-list{position:absolute;z-index:900;top:100%;left:0;visibility:hidden;width:170px}.calendarium-list,.calendarium-item{margin:0;padding:0;list-style:none;background:#fff}.calendarium-item{float:none;text-align:left}.calendarium-item-link{display:block;text-decoration:none;outline:none}.calendarium-item.hover,.calendarium-item:hover{position:relative;z-index:900;cursor:pointer;outline:none}.calendarium-theme-plain .calendarium-item{background:none}.calendarium-theme-plain .calendarium-item.hover,.calendarium-theme-plain .calendarium-item:hover{background:#d9edf7}.calendarium-theme-plain .calendarium-list{box-shadow:2px 2px 5px #444}.calendarium-theme-plain .calendarium-item-link{width:100%;height:100%;padding:0.3em 0.6em}
+

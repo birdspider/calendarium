@@ -1,42 +1,71 @@
 {
   "name": "calendarium",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "javascript library providing html markup enabling users to add calendar events to various off/online calendars",
   "homepage": "https://github.com/birdspider/calendarium",
+  "license": "MIT",
   "main": "src/js/calendarium.js",
   "scripts": {
-    "test": "grunt test",
-    "build": "grunt build"
+    "dev": "webpack -d --env.development --watch",
+    "build": "webpack --env.prod=1",
+    "lint": "npx eslint --ext .vue --ext .js --fix src/"
   },
   "author": {
     "name": "Patrik Plihal",
     "email": "patrik.plihal@gmail.com"
   },
-  "browserify-shim": {
-    "jquery": "global:jQuery"
-  },
   "dependencies": {
-    "jquery": "^3.2.1"
+    "jquery": "^3.0.0"
   },
   "devDependencies": {
-    "browserify-shim": "^3.8.14",
-    "grunt": "^1.0.1",
-    "grunt-browserify": "^5.2.0",
-    "grunt-contrib-connect": "^1.0.2",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-jshint": "^1.1.0",
-    "grunt-hapi": "^0.12.0",
-    "grunt-http-server": "^2.0.0",
-    "grunt-sass": "^2.0.0",
-    "http-server": "^0.11.1",
-    "node-sass": "^4.7.2",
-    "sass-lint": "^1.11.1",
-    "uglifyify": "^4.0.3"
+    "loglevel": "^1.6.3",
+    "@babel/polyfill": "^7.4.4",
+    "@babel/runtime": "^7.4.5",
+    "babel-loader": "^8.0.6",
+    "core-js": "^3.1.3",
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/register": "^7.4.4",
+    "acorn": "^6.1.1",
+    "babel-eslint": "^10.0.1",
+    "base64-inline-loader": "^1.1.1",
+    "browser-sync": "^2.26.7",
+    "browser-sync-webpack-plugin": "^2.2.2",
+    "compression": "^1.7.4",
+    "console": "^0.7.2",
+    "css-loader": "^3.0.0",
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-loader": "^2.1.2",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "fetch-jsonp": "^1.1.3",
+    "lodash-es": "^4.17.11",
+    "mini-css-extract-plugin": "^0.7.0",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "version": "^0.1.2",
+    "webpack": "^4.34.0",
+    "webpack-bundle-analyzer": "^3.3.2",
+    "webpack-sources": "1.3.0"
   },
   "keywords": [
     "event",
     "calendar",
     "calendarium"
   ],
-  "license": "MIT"
+  "browserslist": [
+    "> .5% in alt-eu",
+    "last 2 versions",
+    "Firefox ESR",
+    "IE > 10",
+    "not op_mini all",
+    "not < .1%",
+    "not dead"
+  ]
 }
