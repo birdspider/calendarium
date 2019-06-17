@@ -15,7 +15,7 @@ LOCATION:$location
 SUMMARY:$title
 CLASS:PUBLIC
 DESCRIPTION:$description
-DTSTAMP:$dnowF
+DTSTAMP$dnowF
 END:VEVENT
 END:VCALENDAR`
 
@@ -68,6 +68,7 @@ export default function (calendarium) {
       .replace('$location', _wrapText(data.location))
       .replace('$title', _wrapText(data.title))
       .replace('$description', _wrapText(data.description))
+      .replace(/\n/g, '\r\n')
   }
 
   return {
