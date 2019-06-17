@@ -34,11 +34,11 @@ export default function (calendarium) {
     }
   }
 
-  const _wrapText = function (text, length = 75, prefix = '  ') {
+  const _wrapText = function (text, length = 74, prefix = '  ') {
     const re = new RegExp('(.{' + length + '})')
     const chunked = text
       .split(re)
-      .filter(O => O)
+      .filter($.trim)
       .join('\n')
       .replace(/\n/g, '\n  ')
 
