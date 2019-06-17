@@ -4,12 +4,12 @@ javascript library providing html markup enabling users to add calendar events t
 
 ## Information
 
-**very alpha, not yet published on npm, not tested on node, watch out for dragons**
+**very beta, not yet published on npm, not tested on node, watch out for dragons**
 
 ### inspired by
 
-1. [addtocalendar](https://github.com/AddToCalendar/addtocalendar) but reimplemented due to [issue17](https://github.com/AddToCalendar/addtocalendar/issues/17)
-2. [Shariff](https://github.com/heiseonline/shariff) architecture and build process
+[addtocalendar](https://github.com/AddToCalendar/addtocalendar) but reimplemented due to [issue17](https://github.com/AddToCalendar/addtocalendar/issues/17)
+
 
 ## What does it look like
 
@@ -22,10 +22,10 @@ of going via some 3rd party server.
 
 ## Installation
 
-1. `npm -g install grunt-cli`
-2. clone + cd cloned dir
-3. exec `npm install` and `grunt demo`
-4. open browser on http://localhost:8080
+
+1. clone + cd cloned dir
+2. exec `npm install` and `npm run-script dev`
+
 
 ## Minimal fuzz setup
 
@@ -62,5 +62,3 @@ data-event-mode="day"
 ## Contribtion
 
 is very welcome!
-
-Mind you I format the js with `js-beautify -C -s 2 -r` and the sass files with `csscomb -c "personal_fixcss.json"`.
