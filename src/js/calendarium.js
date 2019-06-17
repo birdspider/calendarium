@@ -6,6 +6,7 @@ import GoogleCalendar from './services/googlecalendar'
 import YahooCalendar from './services/yahoocalendar'
 import OutlookOnline from './services/outlookonline'
 import Generic from './services/generic'
+import ICS from './services/ics'
 
 log.setLevel(LOG ? log.levels.DEBUG : log.levels.INFO)
 
@@ -18,7 +19,7 @@ const defaults = {
 
   langFallback: 'en',
 
-  services: ['googlecalendar', 'yahoocalendar', 'outlookonline'],
+  services: ['googlecalendar', 'yahoocalendar', 'outlookonline', 'ics'],
 
   genericCallbacks: [],
 
@@ -79,7 +80,7 @@ class Calendarium {
       description: $.trim(this.options.event.description + '\n\n ' + link)
     }
 
-    const availableServices = [GoogleCalendar, YahooCalendar, OutlookOnline]
+    const availableServices = [GoogleCalendar, YahooCalendar, OutlookOnline, ICS]
       .concat(this.prepGenericCallbacks(this.options.genericCallbacks))
 
     const self = this
@@ -170,12 +171,17 @@ class Calendarium {
       const $shareLink = $('<a>')
         .addClass('calendarium-item-link')
         .attr('rel', 'nofollow')
-        .attr('href', service.link)
         .attr('target', '_blank')
         .attr('title', self.getLocalized(service, 'title'))
         .attr('role', 'button')
         .attr('aria-label', self.getLocalized(service, 'title'))
         .append($shareText)
+
+      if (typeof service.link === 'function') {
+        $shareLink.on('click', service.link)
+      } else {
+        $shareLink.attr('href', service.link)
+      }
 
       $li.append($shareLink)
 
