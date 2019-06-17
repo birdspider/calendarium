@@ -6,9 +6,9 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const year = new Date().getFullYear()
-const contribs = (pkg.contributors || []).map(c => c.name || '').join(', ')
+const contribs = ([pkg.author].concat(pkg.contributors || [])).map(c => c.name || '').join(', ')
 
-const banner = `${pkg.name} - v${pkg.version}\n{pkg.homepage}\nCopyright (c) ${year} ${pkg.author.name} ${contribs}\nLicensed under the ${pkg.license}`
+const banner = `${pkg.name} - v${pkg.version}\n${pkg.homepage}\nCopyright (c) ${year} ${contribs}\nLicensed under the ${pkg.license}`
 
 let bSync = new BrowserSyncPlugin({
   host: 'localhost',
