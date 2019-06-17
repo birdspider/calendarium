@@ -11,10 +11,10 @@ DTSTART$dstartF
 DTEND$dstopF
 SEQUENCE:0
 TRANSP:OPAQUE
-LOCATION:$location
-SUMMARY:$title
+$location
+$title
 CLASS:PUBLIC
-DESCRIPTION:$description
+$description
 DTSTAMP$dnowF
 END:VEVENT
 END:VCALENDAR`
@@ -30,17 +30,17 @@ export default function (calendarium) {
       return ':' + datetime.toISOString().replace(/\.\d+Z$/, 'Z').replace(/[-:]/g, '')
     } else {
       const day = datetime.toISOString().split('T')[0].replace(/-/g, '')
-      return ';VALUE=DATE;TZID=UTC:' + day
+      return ';VALUE=DATE:' + day
     }
   }
 
-  const _wrapText = function (text, length = 74, prefix = '  ') {
+  const _wrapLine = function (text, length = 73, prefix = '  ') {
     const re = new RegExp('(.{' + length + '})')
     const chunked = text
+      .replace(/\n/g, ' ')
       .split(re)
       .filter($.trim)
-      .join('\n')
-      .replace(/\n/g, '\n  ')
+      .join('\n  ')
 
     return $.trim(chunked)
   }
@@ -65,9 +65,9 @@ export default function (calendarium) {
       .replace('$dstartF', startStr)
       .replace('$dstopF', altEndStr || endStr)
       .replace('$dnowF', _makeDate(new Date()))
-      .replace('$location', _wrapText(data.location))
-      .replace('$title', _wrapText(data.title))
-      .replace('$description', _wrapText(data.description))
+      .replace('$location', _wrapLine(`LOCATION:${data.location}`))
+      .replace('$title', _wrapLine(`SUMMARY:${data.title}`))
+      .replace('$description', _wrapLine(`DESCRIPTION:${data.description}`))
       .replace(/\n/g, '\r\n')
   }
 
